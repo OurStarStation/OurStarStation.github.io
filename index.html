@@ -6,7 +6,7 @@
 <title>우리별 정류장</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { font-family: 'Noto Sans KR', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+  body { font-family: 'Noto Sans KR', 'Apple SD Gothic Neo', 'Malgun Gothic', '맑은 고딕', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
 
   /* 별 배경 */
   #stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
@@ -134,6 +134,12 @@
   footer { text-align: center; padding: 24px 0 0; font-size: 12px; color: #6e7681; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 40px; }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+<style>
+  @font-face {
+    font-family: 'Noto Sans KR';
+    src: local('Apple SD Gothic Neo'), local('Malgun Gothic'), local('맑은 고딕');
+  }
+</style>
 </head>
 <body>
 
@@ -166,17 +172,17 @@
         <div class="member-role">회사원<br>별 애호가</div>
       </div>
       <div class="member-card">
-        <div class="avatar mom">??</div>
+        <div class="avatar mom">🏡</div>
         <div class="member-name">엄마</div>
         <div class="member-role">전업주부<br>가족의 중심</div>
       </div>
       <div class="member-card">
-        <div class="avatar daughter">??</div>
+        <div class="avatar daughter">👁</div>
         <div class="member-name">딸</div>
         <div class="member-role">안과 전공의<br>세상을 밝히는</div>
       </div>
       <div class="member-card">
-        <div class="avatar son">?</div>
+        <div class="avatar son">⚓</div>
         <div class="member-name">아들</div>
         <div class="member-role">항해사<br>바다를 누비는</div>
       </div>
@@ -215,7 +221,7 @@
     <div class="card board-list">
       <div class="board-item">
         <div class="board-header">
-          <span class="board-avatar">?</span>
+          <span class="board-avatar">⚓</span>
           <span class="board-author">아들</span>
           <span class="board-date">오늘</span>
         </div>
@@ -223,7 +229,7 @@
       </div>
       <div class="board-item">
         <div class="board-header">
-          <span class="board-avatar">??</span>
+          <span class="board-avatar">👁</span>
           <span class="board-author">딸</span>
           <span class="board-date">어제</span>
         </div>
@@ -231,11 +237,11 @@
       </div>
       <div class="board-item">
         <div class="board-header">
-          <span class="board-avatar">??</span>
+          <span class="board-avatar">🏡</span>
           <span class="board-author">엄마</span>
           <span class="board-date">2일 전</span>
         </div>
-        <div class="board-text">이번 주말 다 같이 저녁 먹을 수 있을까요? 잡채 해놓을게요 ??</div>
+        <div class="board-text">이번 주말 다 같이 저녁 먹을 수 있을까요? 잡채 해놓을게요 😊</div>
       </div>
       <div class="board-item">
         <div class="board-header">
@@ -248,12 +254,12 @@
     </div>
   </section>
 
-  <footer>★ 우리별 정류장 ? 별과 바다와 빛이 모이는 곳</footer>
+  <footer>★ 우리별 정류장 — 별과 바다와 빛이 모이는 곳</footer>
 </div>
 
 <script>
   // ★ 여기에 발급받은 API 키를 입력하세요
-  const API_KEY = 'AIzaSyAAlFcZ8PRBamwJvYpjNgDnHPO5E3ssOGo';
+  const API_KEY = 'YOUR_API_KEY';
 
   // ★ 가족 캘린더 ID 설정 (나중에 추가하세요)
   const CALENDARS = [
