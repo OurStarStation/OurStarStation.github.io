@@ -3,20 +3,20 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>¿ì¸®º° Á¤·ùÀå</title>
+<title>ìš°ë¦¬ë³„ ì •ë¥˜ì¥</title>
 <style>
   * { box-sizing: border-box; margin: 0; padding: 0; }
   body { font-family: 'Noto Sans KR', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
 
-  /* º° ¹è°æ */
+  /* ë³„ ë°°ê²½ */
   #stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
   .star { position: absolute; border-radius: 50%; background: #fff; animation: twinkle linear infinite; }
   @keyframes twinkle { 0%,100%{opacity:.2} 50%{opacity:1} }
 
-  /* ·¹ÀÌ¾Æ¿ô */
+  /* ë ˆì´ì•„ì›ƒ */
   .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 16px 40px; }
 
-  /* ³×ºñ */
+  /* ë„¤ë¹„ */
   nav {
     display: flex; align-items: center; justify-content: space-between;
     padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
@@ -28,7 +28,7 @@
   nav ul li a { font-size: 13px; color: #8b949e; text-decoration: none; transition: color .2s; }
   nav ul li a:hover { color: #f0c040; }
 
-  /* È÷¾î·Î */
+  /* íˆì–´ë¡œ */
   .hero { text-align: center; padding: 60px 0 40px; }
   .hero-icon { font-size: 48px; margin-bottom: 16px; animation: float 4s ease-in-out infinite; }
   @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
@@ -36,7 +36,7 @@
   .hero p { font-size: 15px; color: #8b949e; line-height: 1.8; }
   .hero-date { font-size: 13px; color: #6e7681; margin-top: 12px; }
 
-  /* ¼½¼Ç */
+  /* ì„¹ì…˜ */
   section { margin-top: 32px; }
   .section-title {
     font-size: 14px; font-weight: 700; color: #f0c040;
@@ -44,14 +44,14 @@
     text-transform: uppercase; letter-spacing: 1px;
   }
 
-  /* Ä«µå */
+  /* ì¹´ë“œ */
   .card {
     background: rgba(255,255,255,0.04);
     border: 1px solid rgba(255,255,255,0.1);
     border-radius: 12px; padding: 20px;
   }
 
-  /* °¡Á· ±¸¼º¿ø */
+  /* ê°€ì¡± êµ¬ì„±ì› */
   .member-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
   @media(max-width:600px){ .member-grid { grid-template-columns: repeat(2,1fr); } }
   .member-card {
@@ -71,7 +71,7 @@
   .member-name { font-size: 13px; font-weight: 700; color: #e6edf3; }
   .member-role { font-size: 11px; color: #6e7681; margin-top: 3px; line-height: 1.4; }
 
-  /* Ä¶¸°´õ */
+  /* ìº˜ë¦°ë” */
   .cal-grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
   @media(max-width:600px){ .cal-grid-wrap { grid-template-columns: 1fr; } }
   .cal-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; }
@@ -91,7 +91,7 @@
   .cal-cell.has-event::after { content:''; display:block; width:4px; height:4px; border-radius:50%; background:#7f77dd; margin-top:2px; }
   .cal-cell.empty { opacity: 0; }
 
-  /* ÀÏÁ¤ ¸ñ·Ï */
+  /* ì¼ì • ëª©ë¡ */
   .event-list { display: flex; flex-direction: column; gap: 8px; }
   .event-item {
     display: flex; align-items: flex-start; gap: 12px;
@@ -108,7 +108,7 @@
   .event-title { font-size: 13px; font-weight: 500; color: #e6edf3; }
   .event-meta { font-size: 11px; color: #6e7681; margin-top: 2px; }
 
-  /* °Ô½ÃÆÇ */
+  /* ê²Œì‹œíŒ */
   .board-list { display: flex; flex-direction: column; gap: 8px; }
   .board-item {
     padding: 14px; border-radius: 8px;
@@ -121,16 +121,16 @@
   .board-date { font-size: 11px; color: #6e7681; margin-left: auto; }
   .board-text { font-size: 13px; color: #c9d1d9; line-height: 1.6; }
 
-  /* ¹ü·Ê */
+  /* ë²”ë¡€ */
   .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
   .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6e7681; }
   .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
 
-  /* ·Îµù */
+  /* ë¡œë”© */
   .loading { text-align: center; padding: 20px; color: #6e7681; font-size: 13px; }
   .error { text-align: center; padding: 20px; color: #f85149; font-size: 13px; }
 
-  /* ÇªÅÍ */
+  /* í‘¸í„° */
   footer { text-align: center; padding: 24px 0 0; font-size: 12px; color: #6e7681; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 40px; }
 </style>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
@@ -141,51 +141,51 @@
 
 <div class="wrap">
   <nav>
-    <div class="logo">¡Ú ¿ì¸®º° Á¤·ùÀå</div>
+    <div class="logo">â˜… ìš°ë¦¬ë³„ ì •ë¥˜ì¥</div>
     <ul>
-      <li><a href="#calendar">Ä¶¸°´õ</a></li>
-      <li><a href="#board">°Ô½ÃÆÇ</a></li>
-      <li><a href="#members">°¡Á·¼Ò°³</a></li>
+      <li><a href="#calendar">ìº˜ë¦°ë”</a></li>
+      <li><a href="#board">ê²Œì‹œíŒ</a></li>
+      <li><a href="#members">ê°€ì¡±ì†Œê°œ</a></li>
     </ul>
   </nav>
 
   <div class="hero">
-    <div class="hero-icon">¡Ú</div>
-    <h1>¿ì¸®º° Á¤·ùÀå</h1>
-    <p>º°°ú ¹Ù´Ù¿Í ºûÀÌ ¸ğÀÌ´Â<br>¿ì¸® °¡Á·ÀÇ ÀÛÀº ½°ÅÍ</p>
+    <div class="hero-icon">â˜…</div>
+    <h1>ìš°ë¦¬ë³„ ì •ë¥˜ì¥</h1>
+    <p>ë³„ê³¼ ë°”ë‹¤ì™€ ë¹›ì´ ëª¨ì´ëŠ”<br>ìš°ë¦¬ ê°€ì¡±ì˜ ì‘ì€ ì‰¼í„°</p>
     <div class="hero-date" id="heroDate"></div>
   </div>
 
-  <!-- °¡Á· ±¸¼º¿ø -->
+  <!-- ê°€ì¡± êµ¬ì„±ì› -->
   <section id="members">
-    <div class="section-title">¡Ú °¡Á· ±¸¼º¿ø</div>
+    <div class="section-title">â˜… ê°€ì¡± êµ¬ì„±ì›</div>
     <div class="member-grid">
       <div class="member-card">
-        <div class="avatar dad">¡Ú</div>
-        <div class="member-name">¾Æºü</div>
-        <div class="member-role">È¸»ç¿ø<br>º° ¾ÖÈ£°¡</div>
+        <div class="avatar dad">â˜…</div>
+        <div class="member-name">ì•„ë¹ </div>
+        <div class="member-role">íšŒì‚¬ì›<br>ë³„ ì• í˜¸ê°€</div>
       </div>
       <div class="member-card">
         <div class="avatar mom">??</div>
-        <div class="member-name">¾ö¸¶</div>
-        <div class="member-role">Àü¾÷ÁÖºÎ<br>°¡Á·ÀÇ Áß½É</div>
+        <div class="member-name">ì—„ë§ˆ</div>
+        <div class="member-role">ì „ì—…ì£¼ë¶€<br>ê°€ì¡±ì˜ ì¤‘ì‹¬</div>
       </div>
       <div class="member-card">
         <div class="avatar daughter">??</div>
-        <div class="member-name">µş</div>
-        <div class="member-role">¾È°ú Àü°øÀÇ<br>¼¼»óÀ» ¹àÈ÷´Â</div>
+        <div class="member-name">ë”¸</div>
+        <div class="member-role">ì•ˆê³¼ ì „ê³µì˜<br>ì„¸ìƒì„ ë°íˆëŠ”</div>
       </div>
       <div class="member-card">
         <div class="avatar son">?</div>
-        <div class="member-name">¾Æµé</div>
-        <div class="member-role">Ç×ÇØ»ç<br>¹Ù´Ù¸¦ ´©ºñ´Â</div>
+        <div class="member-name">ì•„ë“¤</div>
+        <div class="member-role">í•­í•´ì‚¬<br>ë°”ë‹¤ë¥¼ ëˆ„ë¹„ëŠ”</div>
       </div>
     </div>
   </section>
 
-  <!-- ÀÌ¹ø ´Ş ÀÏÁ¤ -->
+  <!-- ì´ë²ˆ ë‹¬ ì¼ì • -->
   <section id="calendar">
-    <div class="section-title">¡Ú ÀÌ¹ø ´Ş ÀÏÁ¤</div>
+    <div class="section-title">â˜… ì´ë²ˆ ë‹¬ ì¼ì •</div>
     <div class="cal-grid-wrap">
       <div class="cal-box">
         <div class="cal-header">
@@ -195,75 +195,75 @@
         </div>
         <div class="cal-days" id="calGrid"></div>
         <div class="legend">
-          <div class="legend-item"><span class="legend-dot" style="background:#7f77dd"></span>¾Æºü</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#d4537e"></span>¾ö¸¶</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#1d9e75"></span>µş</div>
-          <div class="legend-item"><span class="legend-dot" style="background:#378add"></span>¾Æµé</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#7f77dd"></span>ì•„ë¹ </div>
+          <div class="legend-item"><span class="legend-dot" style="background:#d4537e"></span>ì—„ë§ˆ</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#1d9e75"></span>ë”¸</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#378add"></span>ì•„ë“¤</div>
         </div>
       </div>
       <div>
         <div class="event-list" id="eventList">
-          <div class="loading">ÀÏÁ¤À» ºÒ·¯¿À´Â Áß...</div>
+          <div class="loading">ì¼ì •ì„ ë¶ˆëŸ¬ì˜¤ëŠ” ì¤‘...</div>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- °Ô½ÃÆÇ -->
+  <!-- ê²Œì‹œíŒ -->
   <section id="board">
-    <div class="section-title">¡Ú °¡Á· °Ô½ÃÆÇ</div>
+    <div class="section-title">â˜… ê°€ì¡± ê²Œì‹œíŒ</div>
     <div class="card board-list">
       <div class="board-item">
         <div class="board-header">
           <span class="board-avatar">?</span>
-          <span class="board-author">¾Æµé</span>
-          <span class="board-date">¿À´Ã</span>
+          <span class="board-author">ì•„ë“¤</span>
+          <span class="board-date">ì˜¤ëŠ˜</span>
         </div>
-        <div class="board-text">ÀÌ¹ø Ç×·Î ³Ê¹« ¾Æ¸§´Ù¿ö¿ä. ¼öÆò¼± À§·Î º°ÀÌ ¾öÃ» ¸¹ÀÌ º¸¿´¾î¿ä ¡Ú</div>
+        <div class="board-text">ì´ë²ˆ í•­ë¡œ ë„ˆë¬´ ì•„ë¦„ë‹¤ì›Œìš”. ìˆ˜í‰ì„  ìœ„ë¡œ ë³„ì´ ì—„ì²­ ë§ì´ ë³´ì˜€ì–´ìš” â˜…</div>
       </div>
       <div class="board-item">
         <div class="board-header">
           <span class="board-avatar">??</span>
-          <span class="board-author">µş</span>
-          <span class="board-date">¾îÁ¦</span>
+          <span class="board-author">ë”¸</span>
+          <span class="board-date">ì–´ì œ</span>
         </div>
-        <div class="board-text">´çÁ÷ ³¡³µ¾î¿ä! ¿À´Ã ¼ö¼ú Àß ¸¶ÃÆ°í È¯ÀÚµµ È¸º¹ ÁßÀÌ¿¡¿ä.</div>
+        <div class="board-text">ë‹¹ì§ ëë‚¬ì–´ìš”! ì˜¤ëŠ˜ ìˆ˜ìˆ  ì˜ ë§ˆì³¤ê³  í™˜ìë„ íšŒë³µ ì¤‘ì´ì—ìš”.</div>
       </div>
       <div class="board-item">
         <div class="board-header">
           <span class="board-avatar">??</span>
-          <span class="board-author">¾ö¸¶</span>
-          <span class="board-date">2ÀÏ Àü</span>
+          <span class="board-author">ì—„ë§ˆ</span>
+          <span class="board-date">2ì¼ ì „</span>
         </div>
-        <div class="board-text">ÀÌ¹ø ÁÖ¸» ´Ù °°ÀÌ Àú³á ¸ÔÀ» ¼ö ÀÖÀ»±î¿ä? ÀâÃ¤ ÇØ³õÀ»°Ô¿ä ??</div>
+        <div class="board-text">ì´ë²ˆ ì£¼ë§ ë‹¤ ê°™ì´ ì €ë… ë¨¹ì„ ìˆ˜ ìˆì„ê¹Œìš”? ì¡ì±„ í•´ë†“ì„ê²Œìš” ??</div>
       </div>
       <div class="board-item">
         <div class="board-header">
-          <span class="board-avatar">¡Ú</span>
-          <span class="board-author">¾Æºü</span>
-          <span class="board-date">3ÀÏ Àü</span>
+          <span class="board-avatar">â˜…</span>
+          <span class="board-author">ì•„ë¹ </span>
+          <span class="board-date">3ì¼ ì „</span>
         </div>
-        <div class="board-text">¿À´Ã ¹ã Æä¸£¼¼¿ì½º À¯¼º¿ì º¼ ¼ö ÀÖ´ë¿ä. ¸¼Àº ³¯ ¿Á»ó¿¡¼­ °°ÀÌ ºÁ¿ä.</div>
+        <div class="board-text">ì˜¤ëŠ˜ ë°¤ í˜ë¥´ì„¸ìš°ìŠ¤ ìœ ì„±ìš° ë³¼ ìˆ˜ ìˆëŒ€ìš”. ë§‘ì€ ë‚  ì˜¥ìƒì—ì„œ ê°™ì´ ë´ìš”.</div>
       </div>
     </div>
   </section>
 
-  <footer>¡Ú ¿ì¸®º° Á¤·ùÀå ? º°°ú ¹Ù´Ù¿Í ºûÀÌ ¸ğÀÌ´Â °÷</footer>
+  <footer>â˜… ìš°ë¦¬ë³„ ì •ë¥˜ì¥ ? ë³„ê³¼ ë°”ë‹¤ì™€ ë¹›ì´ ëª¨ì´ëŠ” ê³³</footer>
 </div>
 
 <script>
-  // ¡Ú ¿©±â¿¡ ¹ß±Ş¹ŞÀº API Å°¸¦ ÀÔ·ÂÇÏ¼¼¿ä
+  // â˜… ì—¬ê¸°ì— ë°œê¸‰ë°›ì€ API í‚¤ë¥¼ ì…ë ¥í•˜ì„¸ìš”
   const API_KEY = 'AIzaSyAAlFcZ8PRBamwJvYpjNgDnHPO5E3ssOGo';
 
-  // ¡Ú °¡Á· Ä¶¸°´õ ID ¼³Á¤ (³ªÁß¿¡ Ãß°¡ÇÏ¼¼¿ä)
+  // â˜… ê°€ì¡± ìº˜ë¦°ë” ID ì„¤ì • (ë‚˜ì¤‘ì— ì¶”ê°€í•˜ì„¸ìš”)
   const CALENDARS = [
-    { id: '02e974f64c62923da51e2fa7eff54daf208e93f4c24e3180be05168fd175f5b2@group.calendar.google.com', name: '¾Æºü', cls: 'dad' },
-    // { id: '¿ÍÀÌÇÁ_Ä¶¸°´õ_ID@group.calendar.google.com', name: '¾ö¸¶', cls: 'mom' },
-    // { id: 'µş_Ä¶¸°´õ_ID@group.calendar.google.com', name: 'µş', cls: 'daughter' },
-    // { id: '¾Æµé_Ä¶¸°´õ_ID@group.calendar.google.com', name: '¾Æµé', cls: 'son' },
+    { id: '02e974f64c62923da51e2fa7eff54daf208e93f4c24e3180be05168fd175f5b2@group.calendar.google.com', name: 'ì•„ë¹ ', cls: 'dad' },
+    // { id: 'ì™€ì´í”„_ìº˜ë¦°ë”_ID@group.calendar.google.com', name: 'ì—„ë§ˆ', cls: 'mom' },
+    // { id: 'ë”¸_ìº˜ë¦°ë”_ID@group.calendar.google.com', name: 'ë”¸', cls: 'daughter' },
+    // { id: 'ì•„ë“¤_ìº˜ë¦°ë”_ID@group.calendar.google.com', name: 'ì•„ë“¤', cls: 'son' },
   ];
 
-  // º° ¹è°æ »ı¼º
+  // ë³„ ë°°ê²½ ìƒì„±
   const starsEl = document.getElementById('stars');
   for (let i = 0; i < 80; i++) {
     const s = document.createElement('div');
@@ -274,22 +274,22 @@
     starsEl.appendChild(s);
   }
 
-  // ¿À´Ã ³¯Â¥
+  // ì˜¤ëŠ˜ ë‚ ì§œ
   const now = new Date();
   document.getElementById('heroDate').textContent =
-    now.getFullYear() + '³â ' + (now.getMonth()+1) + '¿ù ' + now.getDate() + 'ÀÏ ' +
-    ['ÀÏ','¿ù','È­','¼ö','¸ñ','±İ','Åä'][now.getDay()] + '¿äÀÏ';
+    now.getFullYear() + 'ë…„ ' + (now.getMonth()+1) + 'ì›” ' + now.getDate() + 'ì¼ ' +
+    ['ì¼','ì›”','í™”','ìˆ˜','ëª©','ê¸ˆ','í† '][now.getDay()] + 'ìš”ì¼';
 
-  // Ä¶¸°´õ
+  // ìº˜ë¦°ë”
   let curYear = now.getFullYear(), curMonth = now.getMonth();
   let allEvents = [];
 
   function renderCal(y, m) {
-    const months = ['1¿ù','2¿ù','3¿ù','4¿ù','5¿ù','6¿ù','7¿ù','8¿ù','9¿ù','10¿ù','11¿ù','12¿ù'];
-    document.getElementById('calMonth').textContent = y + '³â ' + months[m];
+    const months = ['1ì›”','2ì›”','3ì›”','4ì›”','5ì›”','6ì›”','7ì›”','8ì›”','9ì›”','10ì›”','11ì›”','12ì›”'];
+    document.getElementById('calMonth').textContent = y + 'ë…„ ' + months[m];
     const grid = document.getElementById('calGrid');
     grid.innerHTML = '';
-    ['ÀÏ','¿ù','È­','¼ö','¸ñ','±İ','Åä'].forEach(d => {
+    ['ì¼','ì›”','í™”','ìˆ˜','ëª©','ê¸ˆ','í† '].forEach(d => {
       const el = document.createElement('div');
       el.className = 'cal-day-label'; el.textContent = d; grid.appendChild(el);
     });
@@ -298,7 +298,7 @@
     for (let i = 0; i < first; i++) {
       const el = document.createElement('div'); el.className = 'cal-cell empty'; el.textContent = '0'; grid.appendChild(el);
     }
-    // ÀÌº¥Æ® ³¯Â¥ ¸ğÀ½
+    // ì´ë²¤íŠ¸ ë‚ ì§œ ëª¨ìŒ
     const eventDays = new Set(allEvents.map(e => {
       const d = new Date(e.start.dateTime || e.start.date);
       return d.getFullYear() === y && d.getMonth() === m ? d.getDate() : null;
@@ -322,19 +322,19 @@
 
   renderCal(curYear, curMonth);
 
-  // ±¸±Û Ä¶¸°´õ API È£Ãâ
+  // êµ¬ê¸€ ìº˜ë¦°ë” API í˜¸ì¶œ
   async function fetchEvents(calId) {
     const timeMin = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
     const timeMax = new Date(now.getFullYear(), now.getMonth()+2, 0).toISOString();
     const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime&maxResults=30`;
     const res = await fetch(url);
-    if (!res.ok) throw new Error('API ¿À·ù');
+    if (!res.ok) throw new Error('API ì˜¤ë¥˜');
     return res.json();
   }
 
   async function loadAllEvents() {
     if (API_KEY === 'YOUR_API_KEY') {
-      document.getElementById('eventList').innerHTML = '<div class="error">API Å°¸¦ ÀÔ·ÂÇØ ÁÖ¼¼¿ä.<br>ÄÚµå¿¡¼­ YOUR_API_KEY¸¦ ±³Ã¼ÇÏ¼¼¿ä.</div>';
+      document.getElementById('eventList').innerHTML = '<div class="error">API í‚¤ë¥¼ ì…ë ¥í•´ ì£¼ì„¸ìš”.<br>ì½”ë“œì—ì„œ YOUR_API_KEYë¥¼ êµì²´í•˜ì„¸ìš”.</div>';
       return;
     }
     try {
@@ -353,7 +353,7 @@
       renderCal(curYear, curMonth);
       renderEvents();
     } catch(e) {
-      document.getElementById('eventList').innerHTML = '<div class="error">ÀÏÁ¤À» ºÒ·¯¿ÀÁö ¸øÇß¾î¿ä.<br>API Å°¿Í Ä¶¸°´õ ID¸¦ È®ÀÎÇØ ÁÖ¼¼¿ä.</div>';
+      document.getElementById('eventList').innerHTML = '<div class="error">ì¼ì •ì„ ë¶ˆëŸ¬ì˜¤ì§€ ëª»í–ˆì–´ìš”.<br>API í‚¤ì™€ ìº˜ë¦°ë” IDë¥¼ í™•ì¸í•´ ì£¼ì„¸ìš”.</div>';
     }
   }
 
@@ -361,17 +361,17 @@
     const list = document.getElementById('eventList');
     const upcoming = allEvents.filter(ev => new Date(ev.start.dateTime || ev.start.date) >= new Date(now.getFullYear(), now.getMonth(), now.getDate()));
     if (upcoming.length === 0) {
-      list.innerHTML = '<div class="loading">´Ù°¡¿À´Â ÀÏÁ¤ÀÌ ¾ø¾î¿ä.</div>'; return;
+      list.innerHTML = '<div class="loading">ë‹¤ê°€ì˜¤ëŠ” ì¼ì •ì´ ì—†ì–´ìš”.</div>'; return;
     }
     list.innerHTML = upcoming.slice(0,8).map(ev => {
       const start = new Date(ev.start.dateTime || ev.start.date);
-      const dateStr = (start.getMonth()+1) + '/' + start.getDate() + ' ' + ['ÀÏ','¿ù','È­','¼ö','¸ñ','±İ','Åä'][start.getDay()] + '¿äÀÏ';
-      const timeStr = ev.start.dateTime ? start.getHours() + ':' + String(start.getMinutes()).padStart(2,'0') : 'Á¾ÀÏ';
+      const dateStr = (start.getMonth()+1) + '/' + start.getDate() + ' ' + ['ì¼','ì›”','í™”','ìˆ˜','ëª©','ê¸ˆ','í† '][start.getDay()] + 'ìš”ì¼';
+      const timeStr = ev.start.dateTime ? start.getHours() + ':' + String(start.getMinutes()).padStart(2,'0') : 'ì¢…ì¼';
       return `<div class="event-item">
         <span class="event-dot ${ev._cal.cls}"></span>
         <div class="event-info">
-          <div class="event-title">${ev.summary || '(Á¦¸ñ ¾øÀ½)'}</div>
-          <div class="event-meta">${ev._cal.name} ¡¤ ${dateStr} ${timeStr}</div>
+          <div class="event-title">${ev.summary || '(ì œëª© ì—†ìŒ)'}</div>
+          <div class="event-meta">${ev._cal.name} Â· ${dateStr} ${timeStr}</div>
         </div>
       </div>`;
     }).join('');
