@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>우리별 정류장</title>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: 'Noto Sans KR', sans-serif; background: #0d1117; color: #e6edf3; min-height: 100vh; }
+
+  /* 별 배경 */
+  #stars { position: fixed; inset: 0; z-index: 0; overflow: hidden; pointer-events: none; }
+  .star { position: absolute; border-radius: 50%; background: #fff; animation: twinkle linear infinite; }
+  @keyframes twinkle { 0%,100%{opacity:.2} 50%{opacity:1} }
+
+  /* 레이아웃 */
+  .wrap { position: relative; z-index: 1; max-width: 900px; margin: 0 auto; padding: 0 16px 40px; }
+
+  /* 네비 */
+  nav {
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 16px 0; border-bottom: 1px solid rgba(255,255,255,0.1);
+    position: sticky; top: 0; z-index: 10;
+    background: rgba(13,17,23,0.85); backdrop-filter: blur(8px);
+  }
+  .logo { font-size: 18px; font-weight: 700; color: #f0c040; display: flex; align-items: center; gap: 8px; }
+  nav ul { display: flex; gap: 20px; list-style: none; }
+  nav ul li a { font-size: 13px; color: #8b949e; text-decoration: none; transition: color .2s; }
+  nav ul li a:hover { color: #f0c040; }
+
+  /* 히어로 */
+  .hero { text-align: center; padding: 60px 0 40px; }
+  .hero-icon { font-size: 48px; margin-bottom: 16px; animation: float 4s ease-in-out infinite; }
+  @keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-10px)} }
+  .hero h1 { font-size: 32px; font-weight: 700; color: #f0c040; margin-bottom: 10px; }
+  .hero p { font-size: 15px; color: #8b949e; line-height: 1.8; }
+  .hero-date { font-size: 13px; color: #6e7681; margin-top: 12px; }
+
+  /* 섹션 */
+  section { margin-top: 32px; }
+  .section-title {
+    font-size: 14px; font-weight: 700; color: #f0c040;
+    margin-bottom: 16px; display: flex; align-items: center; gap: 8px;
+    text-transform: uppercase; letter-spacing: 1px;
+  }
+
+  /* 카드 */
+  .card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.1);
+    border-radius: 12px; padding: 20px;
+  }
+
+  /* 가족 구성원 */
+  .member-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  @media(max-width:600px){ .member-grid { grid-template-columns: repeat(2,1fr); } }
+  .member-card {
+    background: rgba(255,255,255,0.04);
+    border: 1px solid rgba(255,255,255,0.08);
+    border-radius: 12px; padding: 16px; text-align: center;
+  }
+  .avatar {
+    width: 48px; height: 48px; border-radius: 50%;
+    display: flex; align-items: center; justify-content: center;
+    font-size: 20px; margin: 0 auto 10px;
+  }
+  .avatar.dad { background: rgba(127,119,221,0.2); border: 1px solid #7f77dd; }
+  .avatar.mom { background: rgba(212,83,126,0.2); border: 1px solid #d4537e; }
+  .avatar.daughter { background: rgba(29,158,117,0.2); border: 1px solid #1d9e75; }
+  .avatar.son { background: rgba(55,138,221,0.2); border: 1px solid #378add; }
+  .member-name { font-size: 13px; font-weight: 700; color: #e6edf3; }
+  .member-role { font-size: 11px; color: #6e7681; margin-top: 3px; line-height: 1.4; }
+
+  /* 캘린더 */
+  .cal-grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+  @media(max-width:600px){ .cal-grid-wrap { grid-template-columns: 1fr; } }
+  .cal-box { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.1); border-radius: 12px; padding: 16px; }
+  .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+  .cal-month { font-size: 14px; font-weight: 700; color: #f0c040; }
+  .cal-nav { background: none; border: none; color: #6e7681; font-size: 18px; cursor: pointer; padding: 0 4px; }
+  .cal-nav:hover { color: #f0c040; }
+  .cal-days { display: grid; grid-template-columns: repeat(7,1fr); text-align: center; gap: 2px; }
+  .cal-day-label { font-size: 10px; color: #6e7681; padding: 4px 0; }
+  .cal-cell {
+    font-size: 11px; padding: 4px 2px; border-radius: 4px;
+    color: #8b949e; min-height: 26px;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+    position: relative;
+  }
+  .cal-cell.today { background: rgba(240,192,64,0.2); color: #f0c040; font-weight: 700; border-radius: 50%; }
+  .cal-cell.has-event::after { content:''; display:block; width:4px; height:4px; border-radius:50%; background:#7f77dd; margin-top:2px; }
+  .cal-cell.empty { opacity: 0; }
+
+  /* 일정 목록 */
+  .event-list { display: flex; flex-direction: column; gap: 8px; }
+  .event-item {
+    display: flex; align-items: flex-start; gap: 12px;
+    padding: 12px; border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .event-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; margin-top: 4px; }
+  .event-dot.dad { background: #7f77dd; }
+  .event-dot.mom { background: #d4537e; }
+  .event-dot.daughter { background: #1d9e75; }
+  .event-dot.son { background: #378add; }
+  .event-info { flex: 1; }
+  .event-title { font-size: 13px; font-weight: 500; color: #e6edf3; }
+  .event-meta { font-size: 11px; color: #6e7681; margin-top: 2px; }
+
+  /* 게시판 */
+  .board-list { display: flex; flex-direction: column; gap: 8px; }
+  .board-item {
+    padding: 14px; border-radius: 8px;
+    background: rgba(255,255,255,0.03);
+    border: 1px solid rgba(255,255,255,0.07);
+  }
+  .board-header { display: flex; align-items: center; gap: 8px; margin-bottom: 6px; }
+  .board-avatar { font-size: 18px; }
+  .board-author { font-size: 12px; font-weight: 700; color: #f0c040; }
+  .board-date { font-size: 11px; color: #6e7681; margin-left: auto; }
+  .board-text { font-size: 13px; color: #c9d1d9; line-height: 1.6; }
+
+  /* 범례 */
+  .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 12px; }
+  .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: #6e7681; }
+  .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
+
+  /* 로딩 */
+  .loading { text-align: center; padding: 20px; color: #6e7681; font-size: 13px; }
+  .error { text-align: center; padding: 20px; color: #f85149; font-size: 13px; }
+
+  /* 푸터 */
+  footer { text-align: center; padding: 24px 0 0; font-size: 12px; color: #6e7681; border-top: 1px solid rgba(255,255,255,0.08); margin-top: 40px; }
+</style>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body>
+
+<div id="stars"></div>
+
+<div class="wrap">
+  <nav>
+    <div class="logo">★ 우리별 정류장</div>
+    <ul>
+      <li><a href="#calendar">캘린더</a></li>
+      <li><a href="#board">게시판</a></li>
+      <li><a href="#members">가족소개</a></li>
+    </ul>
+  </nav>
+
+  <div class="hero">
+    <div class="hero-icon">★</div>
+    <h1>우리별 정류장</h1>
+    <p>별과 바다와 빛이 모이는<br>우리 가족의 작은 쉼터</p>
+    <div class="hero-date" id="heroDate"></div>
+  </div>
+
+  <!-- 가족 구성원 -->
+  <section id="members">
+    <div class="section-title">★ 가족 구성원</div>
+    <div class="member-grid">
+      <div class="member-card">
+        <div class="avatar dad">★</div>
+        <div class="member-name">아빠</div>
+        <div class="member-role">회사원<br>별 애호가</div>
+      </div>
+      <div class="member-card">
+        <div class="avatar mom">??</div>
+        <div class="member-name">엄마</div>
+        <div class="member-role">전업주부<br>가족의 중심</div>
+      </div>
+      <div class="member-card">
+        <div class="avatar daughter">??</div>
+        <div class="member-name">딸</div>
+        <div class="member-role">안과 전공의<br>세상을 밝히는</div>
+      </div>
+      <div class="member-card">
+        <div class="avatar son">?</div>
+        <div class="member-name">아들</div>
+        <div class="member-role">항해사<br>바다를 누비는</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 이번 달 일정 -->
+  <section id="calendar">
+    <div class="section-title">★ 이번 달 일정</div>
+    <div class="cal-grid-wrap">
+      <div class="cal-box">
+        <div class="cal-header">
+          <button class="cal-nav" id="prevBtn">&#8249;</button>
+          <div class="cal-month" id="calMonth"></div>
+          <button class="cal-nav" id="nextBtn">&#8250;</button>
+        </div>
+        <div class="cal-days" id="calGrid"></div>
+        <div class="legend">
+          <div class="legend-item"><span class="legend-dot" style="background:#7f77dd"></span>아빠</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#d4537e"></span>엄마</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#1d9e75"></span>딸</div>
+          <div class="legend-item"><span class="legend-dot" style="background:#378add"></span>아들</div>
+        </div>
+      </div>
+      <div>
+        <div class="event-list" id="eventList">
+          <div class="loading">일정을 불러오는 중...</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 게시판 -->
+  <section id="board">
+    <div class="section-title">★ 가족 게시판</div>
+    <div class="card board-list">
+      <div class="board-item">
+        <div class="board-header">
+          <span class="board-avatar">?</span>
+          <span class="board-author">아들</span>
+          <span class="board-date">오늘</span>
+        </div>
+        <div class="board-text">이번 항로 너무 아름다워요. 수평선 위로 별이 엄청 많이 보였어요 ★</div>
+      </div>
+      <div class="board-item">
+        <div class="board-header">
+          <span class="board-avatar">??</span>
+          <span class="board-author">딸</span>
+          <span class="board-date">어제</span>
+        </div>
+        <div class="board-text">당직 끝났어요! 오늘 수술 잘 마쳤고 환자도 회복 중이에요.</div>
+      </div>
+      <div class="board-item">
+        <div class="board-header">
+          <span class="board-avatar">??</span>
+          <span class="board-author">엄마</span>
+          <span class="board-date">2일 전</span>
+        </div>
+        <div class="board-text">이번 주말 다 같이 저녁 먹을 수 있을까요? 잡채 해놓을게요 ??</div>
+      </div>
+      <div class="board-item">
+        <div class="board-header">
+          <span class="board-avatar">★</span>
+          <span class="board-author">아빠</span>
+          <span class="board-date">3일 전</span>
+        </div>
+        <div class="board-text">오늘 밤 페르세우스 유성우 볼 수 있대요. 맑은 날 옥상에서 같이 봐요.</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>★ 우리별 정류장 ? 별과 바다와 빛이 모이는 곳</footer>
+</div>
+
+<script>
+  // ★ 여기에 발급받은 API 키를 입력하세요
+  const API_KEY = 'AIzaSyAAlFcZ8PRBamwJvYpjNgDnHPO5E3ssOGo';
+
+  // ★ 가족 캘린더 ID 설정 (나중에 추가하세요)
+  const CALENDARS = [
+    { id: '02e974f64c62923da51e2fa7eff54daf208e93f4c24e3180be05168fd175f5b2@group.calendar.google.com', name: '아빠', cls: 'dad' },
+    // { id: '와이프_캘린더_ID@group.calendar.google.com', name: '엄마', cls: 'mom' },
+    // { id: '딸_캘린더_ID@group.calendar.google.com', name: '딸', cls: 'daughter' },
+    // { id: '아들_캘린더_ID@group.calendar.google.com', name: '아들', cls: 'son' },
+  ];
+
+  // 별 배경 생성
+  const starsEl = document.getElementById('stars');
+  for (let i = 0; i < 80; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const size = Math.random() * 2.5 + 0.5;
+    const dur = Math.random() * 4 + 2;
+    s.style.cssText = `width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;animation-duration:${dur}s;animation-delay:${Math.random()*4}s;opacity:0.2`;
+    starsEl.appendChild(s);
+  }
+
+  // 오늘 날짜
+  const now = new Date();
+  document.getElementById('heroDate').textContent =
+    now.getFullYear() + '년 ' + (now.getMonth()+1) + '월 ' + now.getDate() + '일 ' +
+    ['일','월','화','수','목','금','토'][now.getDay()] + '요일';
+
+  // 캘린더
+  let curYear = now.getFullYear(), curMonth = now.getMonth();
+  let allEvents = [];
+
+  function renderCal(y, m) {
+    const months = ['1월','2월','3월','4월','5월','6월','7월','8월','9월','10월','11월','12월'];
+    document.getElementById('calMonth').textContent = y + '년 ' + months[m];
+    const grid = document.getElementById('calGrid');
+    grid.innerHTML = '';
+    ['일','월','화','수','목','금','토'].forEach(d => {
+      const el = document.createElement('div');
+      el.className = 'cal-day-label'; el.textContent = d; grid.appendChild(el);
+    });
+    const first = new Date(y, m, 1).getDay();
+    const total = new Date(y, m+1, 0).getDate();
+    for (let i = 0; i < first; i++) {
+      const el = document.createElement('div'); el.className = 'cal-cell empty'; el.textContent = '0'; grid.appendChild(el);
+    }
+    // 이벤트 날짜 모음
+    const eventDays = new Set(allEvents.map(e => {
+      const d = new Date(e.start.dateTime || e.start.date);
+      return d.getFullYear() === y && d.getMonth() === m ? d.getDate() : null;
+    }).filter(Boolean));
+
+    for (let d = 1; d <= total; d++) {
+      const el = document.createElement('div'); el.className = 'cal-cell';
+      el.textContent = d;
+      if (y === now.getFullYear() && m === now.getMonth() && d === now.getDate()) el.classList.add('today');
+      if (eventDays.has(d)) el.classList.add('has-event');
+      grid.appendChild(el);
+    }
+  }
+
+  document.getElementById('prevBtn').onclick = () => {
+    curMonth--; if (curMonth < 0) { curMonth = 11; curYear--; } renderCal(curYear, curMonth);
+  };
+  document.getElementById('nextBtn').onclick = () => {
+    curMonth++; if (curMonth > 11) { curMonth = 0; curYear++; } renderCal(curYear, curMonth);
+  };
+
+  renderCal(curYear, curMonth);
+
+  // 구글 캘린더 API 호출
+  async function fetchEvents(calId) {
+    const timeMin = new Date(now.getFullYear(), now.getMonth(), 1).toISOString();
+    const timeMax = new Date(now.getFullYear(), now.getMonth()+2, 0).toISOString();
+    const url = `https://www.googleapis.com/calendar/v3/calendars/${encodeURIComponent(calId)}/events?key=${API_KEY}&timeMin=${timeMin}&timeMax=${timeMax}&singleEvents=true&orderBy=startTime&maxResults=30`;
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('API 오류');
+    return res.json();
+  }
+
+  async function loadAllEvents() {
+    if (API_KEY === 'YOUR_API_KEY') {
+      document.getElementById('eventList').innerHTML = '<div class="error">API 키를 입력해 주세요.<br>코드에서 YOUR_API_KEY를 교체하세요.</div>';
+      return;
+    }
+    try {
+      const results = await Promise.all(
+        CALENDARS.map(cal => fetchEvents(cal.id).then(data => ({ cal, items: data.items || [] })))
+      );
+      allEvents = [];
+      results.forEach(({ cal, items }) => {
+        items.forEach(ev => { ev._cal = cal; allEvents.push(ev); });
+      });
+      allEvents.sort((a,b) => {
+        const da = new Date(a.start.dateTime || a.start.date);
+        const db = new Date(b.start.dateTime || b.start.date);
+        return da - db;
+      });
+      renderCal(curYear, curMonth);
+      renderEvents();
+    } catch(e) {
+      document.getElementById('eventList').innerHTML = '<div class="error">일정을 불러오지 못했어요.<br>API 키와 캘린더 ID를 확인해 주세요.</div>';
+    }
+  }
+
+  function renderEvents() {
+    const list = document.getElementById('eventList');
+    const upcoming = allEvents.filter(ev => new Date(ev.start.dateTime || ev.start.date) >= new Date(now.getFullYear(), now.getMonth(), now.getDate()));
+    if (upcoming.length === 0) {
+      list.innerHTML = '<div class="loading">다가오는 일정이 없어요.</div>'; return;
+    }
+    list.innerHTML = upcoming.slice(0,8).map(ev => {
+      const start = new Date(ev.start.dateTime || ev.start.date);
+      const dateStr = (start.getMonth()+1) + '/' + start.getDate() + ' ' + ['일','월','화','수','목','금','토'][start.getDay()] + '요일';
+      const timeStr = ev.start.dateTime ? start.getHours() + ':' + String(start.getMinutes()).padStart(2,'0') : '종일';
+      return `<div class="event-item">
+        <span class="event-dot ${ev._cal.cls}"></span>
+        <div class="event-info">
+          <div class="event-title">${ev.summary || '(제목 없음)'}</div>
+          <div class="event-meta">${ev._cal.name} · ${dateStr} ${timeStr}</div>
+        </div>
+      </div>`;
+    }).join('');
+  }
+
+  loadAllEvents();
+</script>
+</body>
+</html>
