@@ -60,16 +60,18 @@
     border-radius: 12px; padding: 16px; text-align: center;
   }
   .avatar {
-    width: 48px; height: 48px; border-radius: 50%;
+    width: 80px; height: 80px; border-radius: 50%;
     display: flex; align-items: center; justify-content: center;
     font-size: 20px; margin: 0 auto 10px;
+    overflow: hidden; object-fit: cover;
   }
-  .avatar.dad { background: rgba(127,119,221,0.2); border: 1px solid #7f77dd; }
-  .avatar.mom { background: rgba(212,83,126,0.2); border: 1px solid #d4537e; }
-  .avatar.daughter { background: rgba(29,158,117,0.2); border: 1px solid #1d9e75; }
-  .avatar.son { background: rgba(55,138,221,0.2); border: 1px solid #378add; }
-  .member-name { font-size: 13px; font-weight: 700; color: #e6edf3; }
-  .member-role { font-size: 11px; color: #6e7681; margin-top: 3px; line-height: 1.4; }
+  .avatar img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+  .avatar.dad { background: rgba(127,119,221,0.2); border: 2px solid #7f77dd; }
+  .avatar.mom { background: rgba(212,83,126,0.2); border: 2px solid #d4537e; }
+  .avatar.daughter { background: rgba(29,158,117,0.2); border: 2px solid #1d9e75; }
+  .avatar.son { background: rgba(55,138,221,0.2); border: 2px solid #378add; }
+  .member-name { font-size: 18px; font-weight: 700; color: #e6edf3; }
+  .member-role { font-size: 15px; color: #6e7681; margin-top: 3px; line-height: 1.4; }
 
   /* 캘린더 */
   .cal-grid-wrap { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
@@ -167,22 +169,30 @@
     <div class="section-title">★ 가족 구성원</div>
     <div class="member-grid">
       <div class="member-card">
-        <div class="avatar dad">★</div>
+        <div class="avatar dad">
+          <img src="photos/dad.jpg" alt="아빠" onerror="this.parentNode.innerHTML='★'">
+        </div>
         <div class="member-name">아빠</div>
         <div class="member-role">회사원<br>별 애호가</div>
       </div>
       <div class="member-card">
-        <div class="avatar mom">🏡</div>
+        <div class="avatar mom">
+          <img src="photos/mom.jpg" alt="엄마" onerror="this.parentNode.innerHTML='🏡'">
+        </div>
         <div class="member-name">엄마</div>
         <div class="member-role">전업주부<br>가족의 중심</div>
       </div>
       <div class="member-card">
-        <div class="avatar daughter">👁</div>
+        <div class="avatar daughter">
+          <img src="photos/daughter.jpg" alt="딸" onerror="this.parentNode.innerHTML='👁'">
+        </div>
         <div class="member-name">딸</div>
         <div class="member-role">안과 전공의<br>세상을 밝히는</div>
       </div>
       <div class="member-card">
-        <div class="avatar son">⚓</div>
+        <div class="avatar son">
+          <img src="photos/son.jpg" alt="아들" onerror="this.parentNode.innerHTML='⚓'">
+        </div>
         <div class="member-name">아들</div>
         <div class="member-role">항해사<br>바다를 누비는</div>
       </div>
@@ -259,7 +269,7 @@
 
 <script>
   // ★ 여기에 발급받은 API 키를 입력하세요
-  const API_KEY = 'AIzaSyAAlFcZ8PRBamwJvYpjNgDnHPO5E3ssOGo';
+  const API_KEY = 'YOUR_API_KEY';
 
   // ★ 가족 캘린더 ID 설정 (나중에 추가하세요)
   const CALENDARS = [
