@@ -238,6 +238,14 @@ header {
   border: 1px solid var(--glass-border);
   cursor: pointer;
   transition: transform .2s, box-shadow .2s;
+  position: relative;
+}
+.gallery-caption {
+  position: absolute; bottom: 0; left: 0; right: 0;
+  background: linear-gradient(transparent, rgba(0,0,0,0.7));
+  color: #fff; font-size: 12px; font-weight: 500;
+  padding: 20px 10px 8px;
+  text-align: center;
 }
 .gallery-item:hover { transform: scale(1.03); box-shadow: 0 0 20px rgba(240,192,64,0.2); }
 .gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
@@ -469,14 +477,22 @@ footer {
         galleryGrid.innerHTML = '<div class="gallery-empty">아직 사진이 없어요.<br><strong style="color:#F0C040">gallery/photos.json</strong> 에 파일명을 추가해 보세요 📸</div>';
         return;
       }
-      photos.forEach((filename, i) => {
+      photos.forEach(photo => {
+        const file = typeof photo === 'string' ? photo : photo.file;
+        const title = typeof photo === 'object' && photo.title ? photo.title : '';
         const item = document.createElement('div');
         item.className = 'gallery-item';
         const img = document.createElement('img');
-        img.src = `gallery/${filename}`;
-        img.alt = filename;
+        img.src = `gallery/${file}`;
+        img.alt = title || file;
         img.onclick = () => { lightboxImg.src = img.src; lightbox.classList.add('active'); };
         item.appendChild(img);
+        if (title) {
+          const cap = document.createElement('div');
+          cap.className = 'gallery-caption';
+          cap.textContent = title;
+          item.appendChild(cap);
+        }
         galleryGrid.appendChild(item);
       });
     })
