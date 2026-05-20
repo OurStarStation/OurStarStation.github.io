@@ -223,7 +223,50 @@ header {
 .board-date { font-size: 11px; color: var(--text-sub); margin-left: auto; }
 .board-text { font-size: 13px; color: #C9D1D9; line-height: 1.7; }
 
-/* ── 범례 ── */
+/* ── 갤러리 ── */
+.gallery-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+  margin-bottom: 14px;
+}
+@media(max-width:600px){ .gallery-grid { grid-template-columns: repeat(2,1fr); } }
+.gallery-item {
+  aspect-ratio: 1;
+  border-radius: 14px;
+  overflow: hidden;
+  border: 1px solid var(--glass-border);
+  cursor: pointer;
+  transition: transform .2s, box-shadow .2s;
+}
+.gallery-item:hover { transform: scale(1.03); box-shadow: 0 0 20px rgba(240,192,64,0.2); }
+.gallery-item img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.gallery-empty {
+  grid-column: 1/-1; text-align: center;
+  padding: 30px; color: var(--text-sub); font-size: 13px; line-height: 1.8;
+}
+.gallery-hint {
+  font-size: 12px; color: var(--text-sub);
+  background: rgba(255,255,255,0.03);
+  border: 1px solid var(--glass-border);
+  border-radius: 10px; padding: 10px 14px;
+}
+.gallery-hint strong { color: var(--gold); }
+
+/* ── 라이트박스 ── */
+.lightbox {
+  display: none; position: fixed; inset: 0; z-index: 1000;
+  background: rgba(0,0,0,0.85); backdrop-filter: blur(8px);
+  align-items: center; justify-content: center;
+}
+.lightbox.active { display: flex; }
+.lightbox img { max-width: 90vw; max-height: 90vh; border-radius: 16px; box-shadow: 0 0 60px rgba(240,192,64,0.2); }
+.lightbox-close {
+  position: absolute; top: 20px; right: 28px;
+  font-size: 32px; color: #fff; cursor: pointer; opacity: .7;
+  background: none; border: none;
+}
+.lightbox-close:hover { opacity: 1; }
 .legend { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 14px; }
 .legend-item { display: flex; align-items: center; gap: 5px; font-size: 11px; color: var(--text-sub); }
 .legend-dot { width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; }
@@ -337,6 +380,17 @@ footer {
     </div>
   </div>
 
+  <!-- Section: 우리의 순간들 (갤러리) -->
+  <div class="dashboard row-full" style="margin-bottom:20px;">
+    <div class="card">
+      <div class="card-title">✦ 우리의 순간들 — 가족 사진첩</div>
+      <div class="gallery-grid" id="galleryGrid">
+        <!-- gallery/ 폴더에 photo1.jpg ~ photo9.jpg 올리면 자동 표시 -->
+      </div>
+      <div class="gallery-hint">📁 GitHub 저장소의 <strong>gallery/</strong> 폴더에 photo1.jpg, photo2.jpg ... 순서로 사진을 올리면 자동으로 표시돼요.</div>
+    </div>
+  </div>
+
   <!-- Section 3: 별빛 게시판 -->
   <div class="dashboard row-full">
     <div class="card">
@@ -385,15 +439,49 @@ footer {
 
 </div>
 
+  <!-- 라이트박스 -->
+  <div class="lightbox" id="lightbox">
+    <button class="lightbox-close" id="lightboxClose">✕</button>
+    <img id="lightboxImg" src="" alt="">
+  </div>
+
 <script>
   // ★ API 키와 캘린더 ID를 여기에 입력하세요
   const API_KEY = 'AIzaSyAAlFcZ8PRBamwJvYpjNgDnHPO5E3ssOGo';
   const CALENDARS = [
     { id: '02e974f64c62923da51e2fa7eff54daf208e93f4c24e3180be05168fd175f5b2@group.calendar.google.com', name: '아빠', cls: 'dad' },
     // { id: '와이프_캘린더_ID@group.calendar.google.com', name: '엄마', cls: 'mom' },
-    // { id: 'bb7493f8025e4f4a838107c328ae99cb4d44897d0331397034fd214247c544c2@group.calendar.google.com', name: '딸', cls: 'daughter' },
+    { id: 'bb7493f8025e4f4a838107c328ae99cb4d44897d0331397034fd214247c544c2@group.calendar.google.com', name: '딸', cls: 'daughter' },
     // { id: '아들_캘린더_ID@group.calendar.google.com', name: '아들', cls: 'son' },
   ];
+
+  // 갤러리 로드 (gallery/photo1.jpg ~ photo20.jpg 자동 탐색)
+  const galleryGrid = document.getElementById('galleryGrid');
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.getElementById('lightboxClose').onclick = () => lightbox.classList.remove('active');
+  lightbox.onclick = (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); };
+
+  let loadedCount = 0;
+  for (let i = 1; i <= 20; i++) {
+    const img = new Image();
+    img.src = `gallery/photo${i}.jpg`;
+    img.onload = () => {
+      loadedCount++;
+      const item = document.createElement('div');
+      item.className = 'gallery-item';
+      const el = document.createElement('img');
+      el.src = img.src; el.alt = `사진 ${i}`;
+      el.onclick = () => { lightboxImg.src = img.src; lightbox.classList.add('active'); };
+      item.appendChild(el);
+      galleryGrid.appendChild(item);
+    };
+  }
+  setTimeout(() => {
+    if (loadedCount === 0) {
+      galleryGrid.innerHTML = '<div class="gallery-empty">아직 사진이 없어요.<br>GitHub의 <strong style="color:#F0C040">gallery/</strong> 폴더에 photo1.jpg 부터 올려보세요 📸</div>';
+    }
+  }, 2000);
 
   // 별 생성
   const starsEl = document.getElementById('stars');
