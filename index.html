@@ -455,33 +455,34 @@ footer {
     // { id: '아들_캘린더_ID@group.calendar.google.com', name: '아들', cls: 'son' },
   ];
 
-  // 갤러리 로드 (gallery/photo1.jpg ~ photo20.jpg 자동 탐색)
+  // 갤러리 로드 (gallery/photos.json 에서 파일명 읽기)
   const galleryGrid = document.getElementById('galleryGrid');
   const lightbox = document.getElementById('lightbox');
   const lightboxImg = document.getElementById('lightboxImg');
   document.getElementById('lightboxClose').onclick = () => lightbox.classList.remove('active');
   lightbox.onclick = (e) => { if(e.target === lightbox) lightbox.classList.remove('active'); };
 
-  let loadedCount = 0;
-  for (let i = 1; i <= 20; i++) {
-    const img = new Image();
-    img.src = `gallery/photo${i}.jpg`;
-    img.onload = () => {
-      loadedCount++;
-      const item = document.createElement('div');
-      item.className = 'gallery-item';
-      const el = document.createElement('img');
-      el.src = img.src; el.alt = `사진 ${i}`;
-      el.onclick = () => { lightboxImg.src = img.src; lightbox.classList.add('active'); };
-      item.appendChild(el);
-      galleryGrid.appendChild(item);
-    };
-  }
-  setTimeout(() => {
-    if (loadedCount === 0) {
-      galleryGrid.innerHTML = '<div class="gallery-empty">아직 사진이 없어요.<br>GitHub의 <strong style="color:#F0C040">gallery/</strong> 폴더에 photo1.jpg 부터 올려보세요 📸</div>';
-    }
-  }, 2000);
+  fetch('gallery/photos.json')
+    .then(res => res.json())
+    .then(photos => {
+      if (!photos.length) {
+        galleryGrid.innerHTML = '<div class="gallery-empty">아직 사진이 없어요.<br><strong style="color:#F0C040">gallery/photos.json</strong> 에 파일명을 추가해 보세요 📸</div>';
+        return;
+      }
+      photos.forEach((filename, i) => {
+        const item = document.createElement('div');
+        item.className = 'gallery-item';
+        const img = document.createElement('img');
+        img.src = `gallery/${filename}`;
+        img.alt = filename;
+        img.onclick = () => { lightboxImg.src = img.src; lightbox.classList.add('active'); };
+        item.appendChild(img);
+        galleryGrid.appendChild(item);
+      });
+    })
+    .catch(() => {
+      galleryGrid.innerHTML = '<div class="gallery-empty">사진을 불러오지 못했어요.<br><strong style="color:#F0C040">gallery/photos.json</strong> 파일을 확인해 주세요 📸</div>';
+    });
 
   // 별 생성
   const starsEl = document.getElementById('stars');
